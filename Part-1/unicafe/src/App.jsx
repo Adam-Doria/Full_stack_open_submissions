@@ -10,9 +10,10 @@ const Button = ({ label, action }) => {
 
 const StatisticLine = ({ label, count }) => {
   return (
-    <div>
-      {label} : {count}
-    </div>
+    <tr>
+      <td>{label}</td>
+      <td>{count}</td>
+    </tr>
   )
 }
 
@@ -23,12 +24,16 @@ const Statistics = ({ good, bad, neutral }) => {
   return (
     <>
       <Title label={'Statistics'} />
-      <StatisticLine label={'good'} count={good} />
-      <StatisticLine label={'neutral'} count={neutral} />
-      <StatisticLine label={'bad'} count={bad} />
-      <StatisticLine label={'all'} count={allFeedback} />
-      <StatisticLine label={'average'} count={average} />
-      <StatisticLine label={'positive'} count={positiveFeedbackRatio} />
+      <table>
+        <tbody>
+        <StatisticLine label={'good'} count={good} />
+        <StatisticLine label={'neutral'} count={neutral} />
+        <StatisticLine label={'bad'} count={bad} />
+        <StatisticLine label={'all'} count={allFeedback} />
+        <StatisticLine label={'average'} count={average} />
+        <StatisticLine label={'positive'} count={positiveFeedbackRatio} />
+        </tbody>
+      </table>
     </>
   )
 }
