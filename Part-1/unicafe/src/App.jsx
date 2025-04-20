@@ -8,11 +8,29 @@ const Button = ({ label, action }) => {
   return <button onClick={action}>{label}</button>
 }
 
-const Statistics = ({ label, count }) => {
+const StatisticsLabel = ({ label, count }) => {
   return (
     <div>
       {label} : {count}
     </div>
+  )
+}
+
+const Statistics = ({good, bad,neutral }) => {
+  const allFeedback= good+bad+neutral 
+  const positiveFeedbackRatio = `${(good / allFeedback )*100} %`
+  const average = (good - bad) / allFeedback
+  return (
+    
+    <>
+      <Title label={'Statistics'} />
+      <StatisticsLabel label={'good'} count={good} />
+      <StatisticsLabel label={'neutral'} count={neutral} />
+      <StatisticsLabel label={'bad'} count={bad} />
+      <StatisticsLabel label={'all'} count={allFeedback} />
+      <StatisticsLabel label={'average'} count={average} />
+      <StatisticsLabel label={'positive'} count={positiveFeedbackRatio} />
+    </>
   )
 }
 
@@ -25,9 +43,7 @@ function App() {
   const handleNeutralFeedback = () => setNeutral((prev) => prev + 1)
   const handleBadFeedback = () => setBad((prev) => prev + 1)
 
-  const allFeedback= good+bad+neutral 
-  const positiveFeedbackRatio = `${(good / allFeedback )*100} %`
-  const average = (good - bad) / allFeedback
+  
 
 
   return (
@@ -36,14 +52,9 @@ function App() {
       <Button label="good" action={handleGoodFeedback} />
       <Button label="neutral" action={handleNeutralFeedback} />
       <Button label="bad" action={handleBadFeedback} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
 
-      <Title label={'Statistics'} />
-      <Statistics label={'good'} count={good} />
-      <Statistics label={'neutral'} count={neutral} />
-      <Statistics label={'bad'} count={bad} />
-      <Statistics label={'all'} count={allFeedback} />
-      <Statistics label={'average'} count={average} />
-      <Statistics label={'positive'} count={positiveFeedbackRatio} />
+    
 
     </>
   )
