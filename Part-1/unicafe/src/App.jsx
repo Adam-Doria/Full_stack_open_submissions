@@ -8,7 +8,7 @@ const Button = ({ label, action }) => {
   return <button onClick={action}>{label}</button>
 }
 
-const StatisticsLabel = ({ label, count }) => {
+const StatisticLine = ({ label, count }) => {
   return (
     <div>
       {label} : {count}
@@ -23,12 +23,12 @@ const Statistics = ({ good, bad, neutral }) => {
   return (
     <>
       <Title label={'Statistics'} />
-      <StatisticsLabel label={'good'} count={good} />
-      <StatisticsLabel label={'neutral'} count={neutral} />
-      <StatisticsLabel label={'bad'} count={bad} />
-      <StatisticsLabel label={'all'} count={allFeedback} />
-      <StatisticsLabel label={'average'} count={average} />
-      <StatisticsLabel label={'positive'} count={positiveFeedbackRatio} />
+      <StatisticLine label={'good'} count={good} />
+      <StatisticLine label={'neutral'} count={neutral} />
+      <StatisticLine label={'bad'} count={bad} />
+      <StatisticLine label={'all'} count={allFeedback} />
+      <StatisticLine label={'average'} count={average} />
+      <StatisticLine label={'positive'} count={positiveFeedbackRatio} />
     </>
   )
 }
