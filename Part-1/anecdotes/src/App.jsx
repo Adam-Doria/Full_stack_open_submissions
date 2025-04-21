@@ -13,6 +13,7 @@ const App = () => {
   ]
   const anecdotesSize = anecdotes.length
   const [selected, setSelected] = useState(0)
+  const [mostLikedAnnectode,setMostlikedAnnectode] = useState(null)
 
   const initialVotes = new Array(anecdotesSize).fill(0)
   const [vote, setVotes] = useState(initialVotes)
@@ -22,22 +23,37 @@ const App = () => {
   const setRandomAnectode = () => {
     setSelected(randomNumber(anecdotesSize))
   }
+  
+  const findMostLikedAnnectode = () => {
+   const annectodeIndex = vote.findIndex(element => element === Math.max(...vote) )
+   setMostlikedAnnectode(annectodeIndex)
+  }
 
   const handleVotes = () => {
     const votesCopy = [...vote]
     votesCopy[selected] += 1
     setVotes(votesCopy)
+    findMostLikedAnnectode()
   }
 
+
   return (
-    <div>
-      <p>{anecdotes[selected]}</p>
-      {vote[selected] > 0 && <p> has {vote[selected]} votes </p>}
+    <>
       <div>
-        <button onClick={handleVotes}>vote</button>
-        <button onClick={setRandomAnectode}>next anectode</button>
+        <h1> Annectode of the day</h1>
+        <p>{anecdotes[selected]}</p>
+        {vote[selected] > 0 && <p> has {vote[selected]} votes </p>}
+        <div>
+          <button onClick={handleVotes}>vote</button>
+          <button onClick={setRandomAnectode}>next anectode</button>
+        </div>
       </div>
-    </div>
+      <div>
+        <h1> Annectode of the day</h1>
+        <p>{anecdotes[mostLikedAnnectode]}</p>
+        {vote[mostLikedAnnectode] > 0 && <p> has {vote[mostLikedAnnectode]} votes </p>}
+      </div>
+    </>
   )
 }
 
