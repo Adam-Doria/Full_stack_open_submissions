@@ -9,22 +9,34 @@ const App = () => {
     'Premature optimization is the root of all evil.',
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
-    'The only way to go fast, is to go well.'
+    'The only way to go fast, is to go well.',
   ]
   const anecdotesSize = anecdotes.length
   const [selected, setSelected] = useState(0)
-  const randomNumber = (max) => Math.floor(Math.random()*max)
-  console.log(selected)
-  const setRandomAnectode = ()=> {
+
+  const initialVotes = new Array(anecdotesSize).fill(0)
+  const [vote, setVotes] = useState(initialVotes)
+
+  const randomNumber = (max) => Math.floor(Math.random() * max)
+
+  const setRandomAnectode = () => {
     setSelected(randomNumber(anecdotesSize))
+  }
+
+  const handleVotes = () => {
+    const votesCopy = [...vote]
+    votesCopy[selected] += 1
+    setVotes(votesCopy)
   }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <button onClick={setRandomAnectode}>
-        next anectode
-      </button>
+      {vote[selected] > 0 && <p> has {vote[selected]} votes </p>}
+      <div>
+        <button onClick={handleVotes}>vote</button>
+        <button onClick={setRandomAnectode}>next anectode</button>
+      </div>
     </div>
   )
 }
