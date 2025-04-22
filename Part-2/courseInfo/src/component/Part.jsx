@@ -1,8 +1,7 @@
-  export const Part = ({ name, exercises }) => {
-    return (
-      <p>
-        {name} {exercises}
-      </p>
-    )
-  }
-  
+export const Part = ({ name, exercises }) => {
+  return (
+    <p>
+      {name} {exercises}
+    </p>
+  )
+}

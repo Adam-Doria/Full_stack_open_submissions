@@ -1,17 +1,23 @@
 import { Part } from './Part'
 import { Total } from './Total'
 
-export const Content = ({ parts }) => {
-const totalExersises = parts.reduce((acc,part)=> acc + part.exercises,0)
-
-
+export const Content = ({ course }) => {
+  const totalExersises = course.parts.reduce(
+    (acc, part) => acc + part.exercises,
+    0
+  )
 
   return (
     <>
-      {parts.map((part) => (
-        <Part key={part.id} name={part.name} exercises={part.exercises} />
+      <h2>{course.name}</h2>
+      {course.parts.map((part) => (
+        <Part
+          key={part.id}
+          name={part.name}
+          exercises={part.exercises}
+        />
       ))}
-      <Total total={totalExersises}/>
+      <Total total={totalExersises} />
     </>
   )
 }

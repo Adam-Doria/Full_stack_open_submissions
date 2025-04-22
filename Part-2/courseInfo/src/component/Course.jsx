@@ -1,11 +1,14 @@
-import  {Content}  from './Content'
+import { Content } from './Content'
 import { Header } from './Header'
 
-export const Course = ({ course }) => {
+export const Course = ({ courses }) => {
+  const courseName = 'Web development curriculum'
   return (
     <>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
+      <Header name={courseName} />
+      {courses.map((course) => (
+        <Content key={course.id} course={course} />
+      ))}
     </>
   )
 }

@@ -1,3 +1,3 @@
 export const Total = ({ total }) => {
-  return <p>total of {total} exercises</p>
+  return <strong>total of {total} exercises</strong>
 }
