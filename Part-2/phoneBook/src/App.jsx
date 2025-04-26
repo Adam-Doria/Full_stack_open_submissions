@@ -1,16 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PersonForm from './component/PersonForm'
 import Filter from './component/Filter'
 import Persons from './component/Persons'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 },
-  ])
-
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
@@ -50,6 +45,18 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then((res) => {
+        const persons = res.data
+        setPersons(persons)
+      })
+      .catch((error) =>
+        console.error('Erreur lors de la récupération des personnes', error)
+      )
+  }, [])
 
   return (
     <div>
