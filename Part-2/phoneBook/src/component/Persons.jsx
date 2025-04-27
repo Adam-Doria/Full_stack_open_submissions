@@ -1,11 +1,12 @@
 import React from 'react'
 
-export default function Persons({ persons,filter }) {
+export default function Persons({ persons, filter, onDelete }) {
   return persons
     .filter((person) => person.name.toLowerCase().includes(filter))
     .map((person) => (
-      <p key={person.name}>
-        {person.name} : {person.number}
-      </p>
+      <div key={person.id}>
+        <span>{person.name} : {person.number}{' '}</span>
+        <button onClick={() => onDelete(person.id)}> delete</button>
+      </div>
     ))
 }
