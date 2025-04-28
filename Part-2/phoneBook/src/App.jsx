@@ -3,12 +3,16 @@ import PersonForm from './component/PersonForm'
 import Filter from './component/Filter'
 import Persons from './component/Persons'
 import contactService from './services/contact'
+import Notification from './component/Notification'
+
+
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState({message:'',type:''})
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -18,6 +22,10 @@ const App = () => {
   }
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
+  }
+  const displayNotification  = ({message,type}) => {
+    setNotification({ message, type})
+    setTimeout(()=>setNotification({ message: '', type: '' }), 5000)
   }
 
   const addContact = (event) => {
@@ -47,7 +55,12 @@ const App = () => {
                 person.id === response.id ? response : person
               )
             )
-          }).catch((error) =>
+            displayNotification({
+              message: `${response.name} mis à jour}`,
+              type: 'success',
+            })
+          })
+          .catch((error) =>
             console.error('Erreur lors de la mise à jour du contact', error)
           )
       }
@@ -58,9 +71,10 @@ const App = () => {
           console.error('Erreur lors de la création de contact', error)
         )
 
-      setPersons([...persons, newContact])
-    }
+        setPersons([...persons, newContact])
 
+        displayNotification({ message: `${newContact.name} added`, type: 'success' })
+    }
     setNewName('')
     setNewNumber('')
   }
@@ -72,7 +86,10 @@ const App = () => {
     if (window.confirm(`Delete ${contactToDelete.name} ?`)) {
       contactService
         .deleteContact(id)
-        .catch((error) => console.error('Erreur lors de la supression', error))
+        .catch((error) =>{ 
+          displayNotification({ message: ` Informations of ${contactToDelete.name} has already been deleted`, type: 'error' })
+          console.error('Erreur lors de la supression', error)
+        })
 
       const newContactList = persons.filter((person) => person.id !== id)
       setPersons([...newContactList])
@@ -93,6 +110,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification.message} type={notification.type} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h3>add a new</h3>
       <PersonForm
