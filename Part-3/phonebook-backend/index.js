@@ -1,6 +1,7 @@
 import express from 'express'
 
 const app = express()
+app.use(express.json())
 const port = 3001
 
 let contacts = [
@@ -25,6 +26,7 @@ let contacts = [
     number: '39-23-6423122',
   },
 ]
+const generateId = () => Math.floor(Math.random() * 100000)
 
 app.get('/api/persons', (req, res) => res.send(contacts))
 
@@ -41,6 +43,23 @@ app.delete('/api/persons/:id', (req, res) => {
   contacts = contacts.filter((contact) => contact.id !== contactId)
   if (!contactToDelete) res.status(404).end()
   res.send(contactToDelete)
+})
+
+app.post('/api/persons', (req, res) => {
+  const body = req.body
+
+  if (!body.name || !body.number)
+    res.status(400).json({
+      error: 'name or number is missing',
+    })
+
+  const contact = {
+    id: generateId(),
+    name: body.name,
+    number: body.number,
+  }
+  contacts = [...contacts, contact]
+  res.send(contact)
 })
 
 app.get('/info', (req, res) => {
