@@ -28,6 +28,11 @@ const contacts = [
 ]
 
 app.get('/api/persons', (req, res) => res.send(contacts))
+app.get('/info', (req,res)=> {
+    const numberOfContacts = contacts.length
+    const date = new Date()
+    res.send(`<p> Phonebook has info for ${numberOfContacts} people</p> <p> ${date}</p>`)
+})
 
 
-app.listen(port, () => console.log(`App url : http://localhost:${port}!`))
+app.listen(port, () => console.log(`App url : http://localhost:${port}`))
