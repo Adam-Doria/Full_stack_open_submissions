@@ -39,6 +39,7 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.delete('/api/persons/:id', (req, res) => {
   const contactId = req.params.id
+
   const contactToDelete = contacts.find((contact) => contact.id === contactId)
   contacts = contacts.filter((contact) => contact.id !== contactId)
   if (!contactToDelete) res.status(404).end()
@@ -47,10 +48,18 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.post('/api/persons', (req, res) => {
   const body = req.body
+  const isDuplicateContact = contacts.find(
+    (contact) => contact.name === body.name
+  )
 
   if (!body.name || !body.number)
     res.status(400).json({
       error: 'name or number is missing',
+    })
+
+  if (isDuplicateContact)
+    res.status(400).json({
+      error: 'name must be unique',
     })
 
   const contact = {
