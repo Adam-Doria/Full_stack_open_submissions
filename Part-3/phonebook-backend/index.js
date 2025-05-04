@@ -3,7 +3,7 @@ import express from 'express'
 const app = express()
 const port = 3001
 
-const contacts = [
+let contacts = [
   {
     id: '1',
     name: 'Arto Hellas',
@@ -35,6 +35,13 @@ app.get('/api/persons/:id', (req, res) => {
   res.send(contact)
 })
 
+app.delete('/api/persons/:id', (req, res) => {
+  const contactId = req.params.id
+  const contactToDelete = contacts.find((contact) => contact.id === contactId)
+  contacts = contacts.filter((contact) => contact.id !== contactId)
+  if (!contactToDelete) res.status(404).end()
+  res.send(contactToDelete)
+})
 
 app.get('/info', (req, res) => {
   const numberOfContacts = contacts.length
